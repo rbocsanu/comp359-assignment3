@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://b3afimitlwk51"]
+
+[ext_resource type="Script" uid="uid://fqypk0tdants" path="res://player_fish.gd" id="1_wcoey"]
+[ext_resource type="PackedScene" uid="uid://dcgmr6n7wrc4a" path="res://PlayerFish/Fish.glb" id="2_xo6wc"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wcoey"]
+size = Vector3(0.72265625, 0.71069336, 2.6774902)
+
+[node name="PlayerFish" type="CharacterBody3D"]
+script = ExtResource("1_wcoey")
+
+[node name="CameraPivot" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0.011464894, -3.2386198)
+current = true
+
+[node name="Fish" parent="." instance=ExtResource("2_xo6wc")]
+transform = Transform3D(0.031254336, 0, 0, 0, 0.031254336, 0, 0, 0, 0.031254336, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_wcoey")

@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://ckwuk8nnieq3m"]
+
+[ext_resource type="PackedScene" uid="uid://b3afimitlwk51" path="res://player_fish.tscn" id="1_ig7tw"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_0xm2m"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ig7tw"]
+ground_bottom_color = Color(0.25337827, 0.35154185, 0.4985448, 1)
+
+[sub_resource type="Sky" id="Sky_0xm2m"]
+sky_material = SubResource("ProceduralSkyMaterial_ig7tw")
+
+[sub_resource type="Environment" id="Environment_h2yge"]
+background_mode = 2
+sky = SubResource("Sky_0xm2m")
+
+[node name="Main" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3562574, 0, 0)
+mesh = SubResource("SphereMesh_0xm2m")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3562574, 3.334845, 7.5393314)
+mesh = SubResource("SphereMesh_0xm2m")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4206276, 3.334845, 7.5393314)
+mesh = SubResource("SphereMesh_0xm2m")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4206276, 1.0641346, -4.105093)
+mesh = SubResource("SphereMesh_0xm2m")
+
+[node name="PlayerFish" parent="." instance=ExtResource("1_ig7tw")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_h2yge")
