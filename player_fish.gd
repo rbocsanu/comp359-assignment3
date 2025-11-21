@@ -7,6 +7,9 @@ extends CharacterBody3D
 
 var mouse_pressed = false
 var camera_direction = Vector3.ZERO
+var spatial_hash: SpatialHash
+var near_balls: Array = []
+var distance = 3.0
 
 func _unhandled_input(event: InputEvent) -> void:
 	
@@ -26,6 +29,15 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 		
 func _physics_process(delta: float) -> void:
+	# Checks neighboring cells for balls in radius
+	var balls = spatial_hash.query(global_position)
+	for ball in near_balls:
+		ball.set_close(false)
+	for ball in balls:
+		if ball.global_position.distance_to(global_position) < distance:
+			ball.set_close(true)
+		near_balls = balls
+	
 	camera_pivot.rotation.x += (camera_direction.y * delta)
 	camera_pivot.rotation.x = clamp(camera_pivot.rotation.x, -PI / 2, PI / 2)
 	

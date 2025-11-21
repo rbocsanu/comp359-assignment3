@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cdj56ikqek2al"]
+
+[ext_resource type="Script" uid="uid://6qxpuw5jde1l" path="res://SpatialHash.gd" id="1_njlsm"]
+
+[node name="SpatialHash" type="Node3D"]
+script = ExtResource("1_njlsm")
