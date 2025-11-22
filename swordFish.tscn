@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://gnlg2usxhoxv"]
+
+[ext_resource type="PackedScene" uid="uid://cavde2v485viv" path="res://Swordfish.glb" id="1_k1swm"]
+
+[node name="SwordFish" type="Node3D"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+
+[node name="Root Scene" parent="." instance=ExtResource("1_k1swm")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.0020097315, 7.4505807e-10, 0.005822432)

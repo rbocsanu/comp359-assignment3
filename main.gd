@@ -4,6 +4,7 @@ extends Node3D
 var player_scene = preload("res://player_fish.tscn")
 var ball_scene = preload("res://ball.tscn")
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# Create instance of a SpatialHash table
@@ -17,7 +18,7 @@ func _ready() -> void:
 	player.size = int(spatial_hash.size)
 	
 	# Creates 10 balls
-	for i in range(1000):
+	for i in range(1600):
 		spawn_ball(Vector3(
 		randf_range(-25,25),
 		randf_range(-25,25),

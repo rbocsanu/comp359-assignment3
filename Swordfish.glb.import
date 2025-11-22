@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dknrrlg15hdnf"
-path="res://.godot/imported/Fish.glb-a22e6f9ab4fd64796da2caa8f0e3e3d3.scn"
+uid="uid://cavde2v485viv"
+path="res://.godot/imported/Swordfish.glb-660d9ea0728f153b54a9daf1ccb7484f.scn"
 
 [deps]
 
-source_file="res://Fish.glb"
-dest_files=["res://.godot/imported/Fish.glb-a22e6f9ab4fd64796da2caa8f0e3e3d3.scn"]
+source_file="res://Swordfish.glb"
+dest_files=["res://.godot/imported/Swordfish.glb-660d9ea0728f153b54a9daf1ccb7484f.scn"]
 
 [params]
 

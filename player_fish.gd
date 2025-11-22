@@ -3,13 +3,14 @@ extends CharacterBody3D
 @onready var camera_pivot = $CameraPivot
 @onready var fish = $Fish
 
-@export var move_speed = 5
+@export var move_speed = 7
 
 var mouse_pressed = false
 var camera_direction = Vector3.ZERO
 var spatial_hash: SpatialHash
 var near_balls: Array = []
-var distance = 3.0
+var distance = 2.0
+var scared_distance = 4.5
 var wire := ImmediateMesh.new()
 var wire_instance: MeshInstance3D
 var key: Vector3i
@@ -88,13 +89,24 @@ func _physics_process(delta: float) -> void:
 	key = spatial_hash.getKey(global_position) * size
 	#_debug_cells()
 	# Checks neighboring cells for balls in radius
-	var balls = spatial_hash.query(global_position)
+	var balls = spatial_hash.query(global_position).filter(func(b): return is_instance_valid(b))
+	near_balls = near_balls.filter(func(b): return is_instance_valid(b))
 	for ball in near_balls:
 		print(balls.size())
 		ball.set_close(false)
+	
 	for ball in balls:
 		if ball.global_position.distance_to(global_position) < distance:
+			#for arr in [near_balls]:  # add any other arrays tracking this boid
+				#if self in arr:
+					#arr.erase(ball)
 			ball.set_close(true)
+			# TODO not a perfect solution as camera angle gets kinda wonky
+			fish.scale *= 1.00075
+			
+		if ball.global_position.distance_to(global_position) < scared_distance:
+			ball.set_close_scared(true, global_position)
+		
 			
 		near_balls = balls
 	
