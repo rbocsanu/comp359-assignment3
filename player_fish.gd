@@ -10,6 +10,62 @@ var camera_direction = Vector3.ZERO
 var spatial_hash: SpatialHash
 var near_balls: Array = []
 var distance = 3.0
+var wire := ImmediateMesh.new()
+var wire_instance: MeshInstance3D
+var key: Vector3i
+var size: int
+var one = Vector3i(1, 1, 1)
+
+func _ready() -> void:
+	wire_instance = MeshInstance3D.new()
+	wire_instance.mesh = wire
+	var mat = StandardMaterial3D.new()
+	wire_instance.material_override = mat
+	mat.albedo_color = Color.WHITE
+	get_parent().add_child(wire_instance)
+
+# Draws debug cells
+func _debug_cells():
+	wire.clear_surfaces()
+	
+	for x in range(-1, 2):
+		for y in range(-1, 2):
+			for z in range(-1 ,2):
+				var cell = key + Vector3i(x, y, z)
+				wire.surface_begin(Mesh.PRIMITIVE_LINE_STRIP)
+				wire.surface_add_vertex(cell)
+				wire.surface_add_vertex(cell + size * Vector3i(1, 0, 0))
+				wire.surface_add_vertex(cell + size * Vector3i(1, 1, 0))
+				wire.surface_add_vertex(cell + size * Vector3i(0, 1, 0))
+				wire.surface_add_vertex(cell)
+				wire.surface_add_vertex(cell + size * Vector3i(0, 0, 1))
+				wire.surface_add_vertex(cell + size * Vector3i(0, 1, 1))
+				wire.surface_add_vertex(cell + size * Vector3i(0, 1, 0))
+				wire.surface_add_vertex(cell)
+				wire.surface_add_vertex(cell + size * Vector3i(0, 0, 1))
+				wire.surface_add_vertex(cell + size * Vector3i(1, 0, 1))
+				wire.surface_add_vertex(cell + size * Vector3i(1, 0, 0))
+				wire.surface_add_vertex(cell)
+				
+				wire.surface_end()
+				
+				wire.surface_begin(Mesh.PRIMITIVE_LINE_STRIP)
+				
+				wire.surface_add_vertex(cell + size * (one))
+				wire.surface_add_vertex(cell + size * (one - Vector3i(1, 0, 0)))
+				wire.surface_add_vertex(cell + size * (one - Vector3i(1, 1, 0)))
+				wire.surface_add_vertex(cell + size * (one - Vector3i(0, 1, 0)))
+				wire.surface_add_vertex(cell + size * (one))
+				wire.surface_add_vertex(cell + size * (one - Vector3i(0, 0, 1)))
+				wire.surface_add_vertex(cell + size * (one - Vector3i(0, 1, 1)))
+				wire.surface_add_vertex(cell + size * (one - Vector3i(0, 1, 0)))
+				wire.surface_add_vertex(cell + size * (one))
+				wire.surface_add_vertex(cell + size * (one - Vector3i(0, 0, 1)))
+				wire.surface_add_vertex(cell + size * (one - Vector3i(1, 0, 1)))
+				wire.surface_add_vertex(cell + size * (one - Vector3i(1, 0, 0)))
+				wire.surface_add_vertex(cell + size * (one))
+				
+				wire.surface_end()
 
 func _unhandled_input(event: InputEvent) -> void:
 	
@@ -29,13 +85,17 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 		
 func _physics_process(delta: float) -> void:
+	key = spatial_hash.getKey(global_position) * size
+	#_debug_cells()
 	# Checks neighboring cells for balls in radius
 	var balls = spatial_hash.query(global_position)
 	for ball in near_balls:
+		print(balls.size())
 		ball.set_close(false)
 	for ball in balls:
 		if ball.global_position.distance_to(global_position) < distance:
 			ball.set_close(true)
+			
 		near_balls = balls
 	
 	camera_pivot.rotation.x += (camera_direction.y * delta)

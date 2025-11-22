@@ -8,6 +8,8 @@ extends Node3D
 var sphere = MeshInstance3D.new()
 var spatial_hash = SpatialHash
 var last_pos: Vector3
+var velocity: Vector3
+var direction: Vector3
 
 func set_hash(_spatial_hash: SpatialHash) -> void:
 	spatial_hash = _spatial_hash
@@ -15,6 +17,7 @@ func set_hash(_spatial_hash: SpatialHash) -> void:
 func _ready():
 	# Creates visual for ball
 	sphere.mesh = SphereMesh.new()
+	sphere.scale = Vector3(0.5, 0.5, 0.5)
 	var mat = StandardMaterial3D.new()
 	sphere.material_override = mat
 	add_child(sphere)
@@ -24,11 +27,26 @@ func _ready():
 	
 	# Add ball to the SpatialHash table
 	spatial_hash.add(self)
+	
+	direction = Vector3(
+		randf_range(-1,1),
+		randf_range(-1,1),
+		randf_range(-1,1)
+	)
 
 
-func _process(_delta):
+func _process(delta):
 	# If position changes
 	# update it with table
+	var drift = Vector3(
+		randf_range(-1, 1),
+		randf_range(-1, 1),
+		randf_range(-1, 1)).normalized()
+	
+	direction = direction.lerp(direction + drift, 1).normalized() * 3
+	velocity = direction
+	global_position += velocity * delta
+	look_at(-velocity + global_position)
 	if global_position != last_pos:
 		spatial_hash.update(self, last_pos)
 		last_pos = global_position

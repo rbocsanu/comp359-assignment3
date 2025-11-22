@@ -11,6 +11,10 @@ sky_material = SubResource("ProceduralSkyMaterial_ig7tw")
 [sub_resource type="Environment" id="Environment_h2yge"]
 background_mode = 2
 sky = SubResource("Sky_0xm2m")
+fog_enabled = true
+fog_light_color = Color(0.1289581, 0.3085443, 0.7245545, 1)
+fog_sun_scatter = 0.5
+fog_density = 0.1068
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_0xm2m")

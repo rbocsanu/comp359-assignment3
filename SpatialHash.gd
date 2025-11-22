@@ -5,7 +5,7 @@ var size: float
 var cells := {}
 
 # Can create instances with different sizes
-func _init(_size: float = 5.0) -> void:
+func _init(_size: float = 1.0) -> void:
 	size = _size
 
 # Associates a position with a key
@@ -63,6 +63,7 @@ func query(pos: Vector3) -> Array:
 		for y in range(-1,2):
 			for z in range(-1,2):
 				var neighbor = key + Vector3i(x,y,z)
+				
 				if cells.has(neighbor):
 					result.append_array(cells[neighbor])
 	return result

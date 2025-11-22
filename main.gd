@@ -14,13 +14,14 @@ func _ready() -> void:
 	var player = player_scene.instantiate()
 	add_child(player)
 	player.spatial_hash = spatial_hash
+	player.size = int(spatial_hash.size)
 	
 	# Creates 10 balls
-	for i in range(10):
+	for i in range(1000):
 		spawn_ball(Vector3(
-		randi_range(-10,10),
-		randi_range(-10,10),
-		randi_range(-10,10)),
+		randf_range(-25,25),
+		randf_range(-25,25),
+		randf_range(-25,25)),
 		spatial_hash)
 
 # Function for creating an instance of ball
