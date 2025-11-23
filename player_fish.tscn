@@ -20,3 +20,5 @@ transform = Transform3D(0.031254336, 0, 0, 0, 0.031254336, 0, 0, 0, 0.031254336,
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_wcoey")
+
+[connection signal="shield_changed" from="." to="." method="_on_shield_changed"]

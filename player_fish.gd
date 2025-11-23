@@ -16,6 +16,23 @@ var wire_instance: MeshInstance3D
 var key: Vector3i
 var size: int
 var one = Vector3i(1, 1, 1)
+#var UI = MarginContainer
+
+
+#signal died
+signal shield_changed
+
+@export var max_shield = 100
+var shield = 0:
+	set = set_shield
+	
+func set_shield(value):
+	shield = clamp(value, 0, max_shield)
+	shield_changed.emit(max_shield, shield)
+	if shield <= 0:
+		print("low shield")
+		#hide()
+		#died.emit()
 
 func _ready() -> void:
 	wire_instance = MeshInstance3D.new()
@@ -24,6 +41,8 @@ func _ready() -> void:
 	wire_instance.material_override = mat
 	mat.albedo_color = Color.WHITE
 	get_parent().add_child(wire_instance)
+	add_to_group("player")
+	#var UI = get_parent().get_node("UI")
 
 # Draws debug cells
 func _debug_cells():
@@ -103,6 +122,7 @@ func _physics_process(delta: float) -> void:
 			ball.set_close(true)
 			# TODO not a perfect solution as camera angle gets kinda wonky
 			fish.scale *= 1.00075
+			shield += (max_shield * 0.75) * delta
 			
 		if ball.global_position.distance_to(global_position) < scared_distance:
 			ball.set_close_scared(true, global_position)
@@ -129,3 +149,11 @@ func _physics_process(delta: float) -> void:
 	
 	velocity = velocity.move_toward(direction * move_speed, delta * move_speed * 5)
 	move_and_slide()
+
+
+#func update_shield(max_value, value):
+	#UI.update_shield(max_value, value)
+
+
+func _on_shield_changed(_max_value, _value) -> void:
+	pass # Replace with function body.

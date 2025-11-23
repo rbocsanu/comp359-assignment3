@@ -18,7 +18,7 @@ func _ready() -> void:
 	player.size = int(spatial_hash.size)
 	
 	# Creates 10 balls
-	for i in range(1600):
+	for i in range(2000):
 		spawn_ball(Vector3(
 		randf_range(-25,25),
 		randf_range(-25,25),

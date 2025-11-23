@@ -190,19 +190,22 @@ func set_close_ball(active: bool):
 	set_color(close_color_ball if active else far_color)
 	
 func remove():
+	# Store position before any changes
+	var pos = global_position
+	
+	# Optional: scale boid for visual effect
 	scale *= 2
-	# Optional: wait for 1 second before actually deleting
+	
+	# Spawn bubbles if the bubble scene exists
 	if bubble_scene:
 		var bubbles = bubble_scene.instantiate()
-		bubbles.global_position = global_position
+		bubbles.global_position = pos
 		get_parent().add_child(bubbles)
-		
+	
+	# Remove from spatial hash
 	spatial_hash.remove(self)
 	
-	# Remove from nearby tracking arrays
-	for arr in [near_balls]:  # add any other arrays tracking this boid
-		if self in arr:
-			arr.erase(self)
-	#await get_tree().create_timer(1.0).timeout
-	queue_free()
+	# Finally free this node safely
+	#queue_free()
+	call_deferred("queue_free")
 	
