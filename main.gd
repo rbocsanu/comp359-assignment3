@@ -13,12 +13,13 @@ func _ready() -> void:
 	
 	# Create instance of player
 	var player = player_scene.instantiate()
+	player.environment = $WorldEnvironment
 	add_child(player)
 	player.spatial_hash = spatial_hash
 	player.size = int(spatial_hash.size)
 	
 	# Creates 10 balls
-	for i in range(2000):
+	for i in range(1000):
 		spawn_ball(Vector3(
 		randf_range(-25,25),
 		randf_range(-25,25),
@@ -30,4 +31,5 @@ func spawn_ball(pos: Vector3, spatial_hash: SpatialHash) -> void:
 	var ball = ball_scene.instantiate()
 	ball.spatial_hash = spatial_hash
 	ball.position = pos
+	ball.set_fish_size(int(pow(randf(), 4) * 4) + 1)
 	add_child(ball)

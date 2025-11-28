@@ -5,7 +5,7 @@ var size: float
 var cells := {}
 
 # Can create instances with different sizes
-func _init(_size: float = 1.0) -> void:
+func _init(_size: float = 2.0) -> void:
 	size = _size
 
 # Associates a position with a key

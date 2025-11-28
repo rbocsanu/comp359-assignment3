@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 @onready var camera_pivot = $CameraPivot
 @onready var fish = $Fish
+@onready var environment
 
 @export var move_speed = 7
 
@@ -9,7 +10,7 @@ var mouse_pressed = false
 var camera_direction = Vector3.ZERO
 var spatial_hash: SpatialHash
 var near_balls: Array = []
-var distance = 2.0
+var distance = 1.0
 var scared_distance = 4.5
 var wire := ImmediateMesh.new()
 var wire_instance: MeshInstance3D
@@ -17,6 +18,7 @@ var key: Vector3i
 var size: int
 var one = Vector3i(1, 1, 1)
 #var UI = MarginContainer
+var growth_rate = 0.04
 
 
 #signal died
@@ -111,7 +113,6 @@ func _physics_process(delta: float) -> void:
 	var balls = spatial_hash.query(global_position).filter(func(b): return is_instance_valid(b))
 	near_balls = near_balls.filter(func(b): return is_instance_valid(b))
 	for ball in near_balls:
-		print(balls.size())
 		ball.set_close(false)
 	
 	for ball in balls:
@@ -121,11 +122,17 @@ func _physics_process(delta: float) -> void:
 					#arr.erase(ball)
 			ball.set_close(true)
 			# TODO not a perfect solution as camera angle gets kinda wonky
-			fish.scale *= 1.00075
+			scale += one * growth_rate
+			distance += growth_rate * 1.1
+			environment.environment.fog_depth_begin += growth_rate * 2
+			environment.environment.fog_depth_end += growth_rate * 2
 			shield += (max_shield * 0.75) * delta
 			
 		if ball.global_position.distance_to(global_position) < scared_distance:
-			ball.set_close_scared(true, global_position)
+			if ball.fish_size <= scale.x:
+				ball.set_close_scared(true, global_position)
+			else: 
+				ball.set_close_hungry(true, global_position)
 		
 			
 		near_balls = balls

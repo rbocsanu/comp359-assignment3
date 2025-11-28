@@ -20,4 +20,3 @@ func _ready():
 func _on_player_shield_changed(max_value, value):
 	shield_bar.max_value = max_value
 	shield_bar.value = value
-	print("running here")

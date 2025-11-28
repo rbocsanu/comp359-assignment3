@@ -1,10 +1,26 @@
-[gd_scene load_steps=3 format=3 uid="uid://dli65bx4xcinw"]
+[gd_scene load_steps=6 format=3 uid="uid://dli65bx4xcinw"]
 
 [ext_resource type="Script" uid="uid://u7s8lf5gvui" path="res://ball.gd" id="1_x8fbi"]
-[ext_resource type="PackedScene" uid="uid://3cqkvh1uc3q3" path="res://Fish.glb" id="2_41u45"]
+[ext_resource type="PackedScene" uid="uid://dknrrlg15hdnf" path="res://Fish.glb" id="2_41u45"]
+[ext_resource type="PackedScene" uid="uid://pe10og428hon" path="res://Shark.glb" id="3_n5601"]
+[ext_resource type="PackedScene" uid="uid://cavde2v485viv" path="res://Swordfish.glb" id="4_gchj4"]
+[ext_resource type="PackedScene" uid="uid://c5ibu04f7ay07" path="res://Fish-2.glb" id="5_01kih"]
 
 [node name="Ball" type="Node3D"]
 script = ExtResource("1_x8fbi")
 
-[node name="Root Scene" parent="." instance=ExtResource("2_41u45")]
-transform = Transform3D(0.075, 0, 0, 0, 0.075, 0, 0, 0, 0.075, 0, 0, 0)
+[node name="flat" parent="." instance=ExtResource("2_41u45")]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0, 0)
+visible = false
+
+[node name="shark" parent="." instance=ExtResource("3_n5601")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
+visible = false
+
+[node name="sword" parent="." instance=ExtResource("4_gchj4")]
+transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, 0, 0, 0)
+visible = false
+
+[node name="sardine" parent="." instance=ExtResource("5_01kih")]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+visible = false

@@ -1,48 +1,49 @@
 extends Node3D
 
-# Colors for close or far
-@export var close_color: Color = Color.GREEN
-@export var close_color_ball: Color = Color.WEB_PURPLE
-@export var far_color: Color = Color.RED
-
 # Flocking parameters
 @export var neighbor_radius: float = 4.0
-@export var separation_radius: float = 1.5
-@export var max_speed: float = 6.0
+@export var separation_radius: float = 2.0
+@export var max_speed: float = 3.0
 @export var max_force: float = 4.0
 @export var max_flee_force: float = 4.5
+@export var max_hunger_force: float = 4.5
 
 @export var weight_separation: float = 1.8
 @export var weight_alignment: float = 1.0
 @export var weight_cohesion: float = 0.8
 
 # Declare some variables
-var sphere = MeshInstance3D.new()
 var spatial_hash = SpatialHash
 var near_balls: Array = []
 var last_pos: Vector3
 var velocity: Vector3 = Vector3.ZERO
 var direction: Vector3 = Vector3.ZERO
+var fish_size = 1
 
 @export var bounds_min: Vector3 = Vector3(-30, -30, -30)
 @export var bounds_max: Vector3 = Vector3( 30,  30,  30)
 @export var boundary_push_strength: float = 8.0
-@export var boundary_distance: float = 8.0   # start steering before reaching wall
+@export var boundary_distance: float = 10.0   # start steering before reaching wall
 
 @export var bubble_scene: PackedScene = preload("res://Bubble.tscn")
 
 func set_hash(_spatial_hash: SpatialHash) -> void:
 	spatial_hash = _spatial_hash
 
+func set_fish_size(_size: int) -> void:
+	fish_size = _size
+	scale *= fish_size * 0.5
+	match fish_size:
+		1:
+			$sardine.visible = !$sardine.visible
+		2:
+			$flat.visible = !$flat.visible
+		3:
+			$sword.visible = !$sword.visible
+		4: 
+			$shark.visible = !$shark.visible
 
 func _ready():
-	# Creates visual for ball
-	sphere.mesh = SphereMesh.new()
-	sphere.scale = Vector3(0.3,0.3, 0.3)
-	var mat = StandardMaterial3D.new()
-	sphere.material_override = mat
-	add_child(sphere)
-	set_color(far_color)
 	
 	last_pos = global_position
 	
@@ -65,6 +66,8 @@ func _process(delta):
 	# QUERIED NEIGHBORS (Broad phase)
 	# ---------------------------------------------------------
 	var neighbors = spatial_hash.query(global_position)
+	var good_neighbors = neighbors.filter(func(ball): return ball.fish_size == fish_size)
+	var bad_neighbors = neighbors.filter(func(ball): return ball.fish_size != fish_size)
 
 	# ---------------------------------------------------------
 	# FLOCKING FORCES
@@ -73,8 +76,11 @@ func _process(delta):
 	var ali = Vector3.ZERO
 	var coh = Vector3.ZERO
 	var count = 0
+	
+	for bad_other in bad_neighbors:
+		flee_from(bad_other.global_position)
 
-	for other in neighbors:
+	for other in good_neighbors:
 		if other == self:
 			continue
 
@@ -163,10 +169,6 @@ func _process(delta):
 # ---------------------------------------------------------
 # Utility color functions
 # ---------------------------------------------------------
-func set_color(color: Color):
-	var material = sphere.get_active_material(0)
-	if material:
-		material.albedo_color = color
 
 func flee_from(predator_pos: Vector3):
 	var desired = (global_position - predator_pos).normalized() * (max_speed * 1.1)
@@ -174,21 +176,27 @@ func flee_from(predator_pos: Vector3):
 	# LIMIT the force so they don’t blast away too fas
 	flee_force = flee_force.limit_length(max_flee_force)
 	velocity += flee_force
+
+func head_towards(prey_position: Vector3):
+	var desired = (prey_position - global_position).normalized()
+	var hunger_force = (desired - velocity).limit_length(max_force)
 	
+	hunger_force = hunger_force.limit_length(max_hunger_force)
+	velocity += hunger_force
+	
+
 func set_close_scared(active: bool, predator_pos: Vector3):
-	
 	if active and predator_pos != Vector3.ZERO:
 		flee_from(predator_pos)
 
+func set_close_hungry(active: bool, prey_pos: Vector3):
+	if active and prey_pos != Vector3.ZERO:
+		head_towards(prey_pos)
+
 func set_close(active: bool):
-	
-	set_color(close_color if active else far_color)
 	if active:
 		remove()
 
-func set_close_ball(active: bool):
-	set_color(close_color_ball if active else far_color)
-	
 func remove():
 	# Store position before any changes
 	var pos = global_position
@@ -199,7 +207,7 @@ func remove():
 	# Spawn bubbles if the bubble scene exists
 	if bubble_scene:
 		var bubbles = bubble_scene.instantiate()
-		bubbles.global_position = pos
+		bubbles.position = pos
 		get_parent().add_child(bubbles)
 	
 	# Remove from spatial hash
