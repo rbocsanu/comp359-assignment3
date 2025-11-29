@@ -1,11 +1,21 @@
 extends CharacterBody3D
 
+class_name Player
+
 @onready var camera_pivot = $CameraPivot
+@onready var camera = $CameraPivot/Camera3D
 @onready var fish = $Fish
 @onready var environment
 
-@export var move_speed = 7
+@export var base_move_speed = 7 # Move speed when not sprinting
+@export var max_sprint_time = 3 # In seconds
+@export var energy_regeneration_time = 8 # In seconds
+@export var sprint_speed_boost = 4 # Added to base_move_speed when sprinting
+@export var sprint_increased_camera_FOV = 100
 
+
+var base_camera_FOV = 75
+var move_speed = base_move_speed
 var mouse_pressed = false
 var camera_direction = Vector3.ZERO
 var spatial_hash: SpatialHash
@@ -19,10 +29,13 @@ var size: int
 var one = Vector3i(1, 1, 1)
 #var UI = MarginContainer
 var growth_rate = 0.04
+var is_sprinting = false
+var energy = 1.0
 
 
 #signal died
 signal shield_changed
+signal sprinting(energy: float)
 
 @export var max_shield = 100
 var shield = 0:
@@ -104,7 +117,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 	if not mouse_pressed:
 		camera_direction = Vector3.ZERO
-	
+		
 		
 func _physics_process(delta: float) -> void:
 	key = spatial_hash.getKey(global_position) * size
@@ -156,6 +169,39 @@ func _physics_process(delta: float) -> void:
 	
 	velocity = velocity.move_toward(direction * move_speed, delta * move_speed * 5)
 	move_and_slide()
+	
+	if Input.is_action_pressed("sprint"):
+		_sprinting(delta)
+	else:
+		_sprint_ended()
+		energy = clamp(energy + delta / energy_regeneration_time, 0.0, 1.0)
+		
+	sprinting.emit(energy)
+	
+func _sprinting(delta: float) -> void:
+	print("Energy: " + str(energy))
+	if energy == 0.0:
+		if is_sprinting:
+			_sprint_ended()
+			return
+		else:
+			return
+	
+	if !is_sprinting:
+		is_sprinting = true
+		camera.fov = sprint_increased_camera_FOV
+	
+	energy = clamp(energy - delta / max_sprint_time, 0.0, 1.0)
+	
+	move_speed = base_move_speed + sprint_speed_boost
+		
+func _sprint_ended() -> void:
+	if is_sprinting:
+		camera.fov = base_camera_FOV
+		move_speed = base_move_speed
+	
+	is_sprinting = false
+	
 
 
 #func update_shield(max_value, value):

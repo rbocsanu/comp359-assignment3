@@ -1,7 +1,8 @@
 extends MarginContainer
 
-@onready var shield_bar = $HBoxContainer/ScoreBar
-var player
+@onready var shield_bar = $Container/ScoreBar
+@onready var energy_bar = $Container/EnergyBar
+var player: Player
 
 func _ready():
 	await get_tree().process_frame  # Wait one frame so Player loads
@@ -15,8 +16,13 @@ func _ready():
 
 	player.shield_changed.connect(_on_player_shield_changed)
 	_on_player_shield_changed(player.max_shield, player.shield)
+	
+	player.sprinting.connect(_on_player_sprint)
 
 
 func _on_player_shield_changed(max_value, value):
 	shield_bar.max_value = max_value
 	shield_bar.value = value
+
+func _on_player_sprint(energy: float):
+	energy_bar.value = energy * 100
