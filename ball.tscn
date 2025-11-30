@@ -24,3 +24,8 @@ visible = false
 [node name="sardine" parent="." instance=ExtResource("5_01kih")]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
 visible = false
+
+[node name="glow" type="OmniLight3D" parent="."]
+light_color = Color(1, 0, 0, 1)
+light_energy = 0.25
+light_size = 3.0

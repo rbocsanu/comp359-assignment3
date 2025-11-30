@@ -25,6 +25,7 @@ func handle_spawn():
 	player.size = int(spatial_hash.size)
 	
 	player.eaten.connect(handle_game_over)
+	player.size_changed.connect(_on_player_size_changed)
 	
 	# Creates fish
 	for i in range(1000):
@@ -33,6 +34,8 @@ func handle_spawn():
 		randf_range(-25,25),
 		randf_range(-25,25)),
 		spatial_hash)
+	
+	_on_player_size_changed(player.current_size)
 
 # Function for creating an instance of ball
 func spawn_ball(pos: Vector3, spatial_hash: SpatialHash) -> void:
@@ -63,3 +66,12 @@ func _respawn():
 		eaten_screen = null
 	
 	handle_spawn()
+
+func _on_player_size_changed(new_size):
+	print("IM WORKING")
+	for ball in balls:
+		if is_instance_valid(ball):
+			if ball.fish_size <= new_size:
+				ball.glow.set_color(Color.GREEN)
+			else:
+				ball.glow.set_color(Color.RED)

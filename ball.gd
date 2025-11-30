@@ -29,6 +29,8 @@ var fish_size = 1
 
 @export var bubble_scene: PackedScene = preload("res://Bubble.tscn")
 
+@onready var glow = $glow
+
 func set_hash(_spatial_hash: SpatialHash) -> void:
 	spatial_hash = _spatial_hash
 
