@@ -13,12 +13,21 @@ func _ready():
 		return
 
 	player = players[0]
-
+	print(player)
+	if player: _init_new_player()
+	
+	get_tree().node_added.connect(_node_added)
+	
+func _node_added(node: Node):
+	if node is not Player or player: return
+	player = node
+	
+	_init_new_player()
+	
+func _init_new_player():
 	player.shield_changed.connect(_on_player_shield_changed)
 	_on_player_shield_changed(player.max_shield, player.shield)
-	
 	player.sprinting.connect(_on_player_sprint)
-
 
 func _on_player_shield_changed(max_value, value):
 	shield_bar.max_value = max_value

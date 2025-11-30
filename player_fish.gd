@@ -2,10 +2,10 @@ extends CharacterBody3D
 
 class_name Player
 
-@onready var camera_pivot = $CameraPivot
-@onready var camera = $CameraPivot/Camera3D
-@onready var fish = $Fish
-@onready var environment
+@onready var camera_pivot: Node3D = $CameraPivot
+@onready var camera: Camera3D = $CameraPivot/Camera3D
+@onready var fish: Node3D = $Fish
+@onready var environment: WorldEnvironment
 
 @export var base_move_speed = 7 # Move speed when not sprinting
 @export var max_sprint_time = 3 # In seconds
@@ -13,6 +13,7 @@ class_name Player
 @export var sprint_speed_boost = 4 # Added to base_move_speed when sprinting
 @export var sprint_increased_camera_FOV = 100
 
+const size_exp_requirements: Array[float] = [0.0, 10.0, 25.0, 50.0]
 
 var base_camera_FOV = 75
 var move_speed = base_move_speed
@@ -33,9 +34,11 @@ var is_sprinting = false
 var energy = 1.0
 
 
-#signal died
 signal shield_changed
 signal sprinting(energy: float)
+signal exp_changed(current_exp: float, current_size: int)
+signal size_changed(level: int)
+signal eaten
 
 @export var max_shield = 100
 var shield = 0:
@@ -49,6 +52,18 @@ func set_shield(value):
 		#hide()
 		#died.emit()
 
+var current_size: int = 1
+var current_exp: float = 0.0:
+	set(value):
+		current_exp = value
+		if current_size < 4 and current_exp >= size_exp_requirements[current_size]:
+			current_exp -= size_exp_requirements[current_size]
+			current_size += 1
+			size_changed.emit(current_size)
+		
+		exp_changed.emit(current_exp, current_size)
+
+
 func _ready() -> void:
 	wire_instance = MeshInstance3D.new()
 	wire_instance.mesh = wire
@@ -57,6 +72,10 @@ func _ready() -> void:
 	mat.albedo_color = Color.WHITE
 	get_parent().add_child(wire_instance)
 	add_to_group("player")
+	
+	current_exp = 0.0
+	current_size = 1
+	energy = 1.0
 	#var UI = get_parent().get_node("UI")
 
 # Draws debug cells
@@ -128,18 +147,14 @@ func _physics_process(delta: float) -> void:
 	for ball in near_balls:
 		ball.set_close(false)
 	
-	for ball in balls:
+	for ball: Ball in balls:
+		if not ball is Ball: continue
+		
 		if ball.global_position.distance_to(global_position) < distance:
 			#for arr in [near_balls]:  # add any other arrays tracking this boid
 				#if self in arr:
 					#arr.erase(ball)
-			ball.set_close(true)
-			# TODO not a perfect solution as camera angle gets kinda wonky
-			scale += one * growth_rate
-			distance += growth_rate * 1.1
-			environment.environment.fog_depth_begin += growth_rate * 2
-			environment.environment.fog_depth_end += growth_rate * 2
-			shield += (max_shield * 0.75) * delta
+			_eat_fish(ball)
 			
 		if ball.global_position.distance_to(global_position) < scared_distance:
 			if ball.fish_size <= scale.x:
@@ -179,7 +194,6 @@ func _physics_process(delta: float) -> void:
 	sprinting.emit(energy)
 	
 func _sprinting(delta: float) -> void:
-	print("Energy: " + str(energy))
 	if energy == 0.0:
 		if is_sprinting:
 			_sprint_ended()
@@ -202,7 +216,17 @@ func _sprint_ended() -> void:
 	
 	is_sprinting = false
 	
-
+func _eat_fish(ball: Ball) -> void:
+	if ball.fish_size <= current_size:
+		ball.set_close(true)
+		scale += one * growth_rate
+		distance += growth_rate * 1.1
+		environment.environment.fog_depth_begin += growth_rate * 2
+		environment.environment.fog_depth_end += growth_rate * 2
+		shield += (max_shield * 0.05) # * delta
+		current_exp += ball.fish_size
+	else:
+		eaten.emit()
 
 #func update_shield(max_value, value):
 	#UI.update_shield(max_value, value)

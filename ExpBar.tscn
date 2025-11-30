@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=3 uid="uid://ccqgopo000gh3"]
+
+[ext_resource type="Texture2D" uid="uid://bopvvw0pqxm4v" path="res://bar_background.png" id="1_l6q6e"]
+[ext_resource type="Script" uid="uid://vite4u0nlyg0" path="res://exp_bar.gd" id="1_u5ttl"]
+[ext_resource type="Texture2D" uid="uid://4krp1h4sojos" path="res://energy_bar.png" id="2_u5ttl"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_l6q6e"]
+font_size = 30
+outline_size = 10
+outline_color = Color(0.15127608, 0.15127608, 0.15127608, 1)
+
+[node name="ExpBar" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_u5ttl")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -286.0
+offset_right = 286.0
+offset_bottom = 63.0
+grow_horizontal = 2
+nine_patch_stretch = true
+stretch_margin_left = 3
+stretch_margin_top = 6
+stretch_margin_right = 3
+stretch_margin_bottom = 6
+texture_under = ExtResource("1_l6q6e")
+texture_progress = ExtResource("2_u5ttl")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -48.0
+offset_top = 11.0
+offset_right = 48.0
+offset_bottom = 98.0
+grow_horizontal = 2
+text = "Size: []
+"
+label_settings = SubResource("LabelSettings_l6q6e")
+horizontal_alignment = 1
+uppercase = true

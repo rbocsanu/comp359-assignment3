@@ -1,0 +1,55 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5qfyvlk8v81b"]
+
+[ext_resource type="Script" uid="uid://dnl48lb7fr0x3" path="res://eaten_screen.gd" id="1_tsdse"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_l35xn"]
+font_size = 70
+
+[node name="EatenScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tsdse")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.8666667, 0, 0, 0.5411765)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -276.5
+offset_top = 159.0
+offset_right = 276.5
+offset_bottom = 265.0
+grow_horizontal = 2
+text = "You Were Eaten!"
+label_settings = SubResource("LabelSettings_l35xn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -161.0
+offset_top = -253.0
+offset_right = 161.0
+offset_bottom = -115.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 50
+text = "RESPAWN"

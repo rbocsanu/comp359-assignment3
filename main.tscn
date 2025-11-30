@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://ckwuk8nnieq3m"]
+[gd_scene load_steps=10 format=3 uid="uid://ckwuk8nnieq3m"]
 
 [ext_resource type="Script" uid="uid://cr6v38cx37swp" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://bv0476nxycl37" path="res://UI.gd" id="2_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://ccqgopo000gh3" path="res://ExpBar.tscn" id="2_7mycd"]
 [ext_resource type="Texture2D" uid="uid://bopvvw0pqxm4v" path="res://bar_background.png" id="2_h2yge"]
 [ext_resource type="Texture2D" uid="uid://cadyqafe438xl" path="res://bar_foreground.png" id="3_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://4krp1h4sojos" path="res://energy_bar.png" id="5_lquwl"]
@@ -24,6 +25,9 @@ fog_depth_curve = 0.044194233
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_0xm2m")
+
+[node name="ExpBar" parent="." instance=ExtResource("2_7mycd")]
+mouse_filter = 1
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
@@ -51,10 +55,10 @@ custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 max_value = 0.0
 nine_patch_stretch = true
-stretch_margin_left = 4
-stretch_margin_top = 4
-stretch_margin_right = 4
-stretch_margin_bottom = 4
+stretch_margin_left = 10
+stretch_margin_top = 10
+stretch_margin_right = 10
+stretch_margin_bottom = 10
 texture_under = ExtResource("2_h2yge")
 texture_progress = ExtResource("3_1bvp3")
 
@@ -62,9 +66,9 @@ texture_progress = ExtResource("3_1bvp3")
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 nine_patch_stretch = true
-stretch_margin_left = 4
-stretch_margin_top = 4
-stretch_margin_right = 4
-stretch_margin_bottom = 4
+stretch_margin_left = 10
+stretch_margin_top = 10
+stretch_margin_right = 10
+stretch_margin_bottom = 10
 texture_under = ExtResource("2_h2yge")
 texture_progress = ExtResource("5_lquwl")

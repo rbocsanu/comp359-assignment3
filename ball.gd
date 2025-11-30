@@ -1,5 +1,7 @@
 extends Node3D
 
+class_name Ball
+
 # Flocking parameters
 @export var neighbor_radius: float = 4.0
 @export var separation_radius: float = 2.0
