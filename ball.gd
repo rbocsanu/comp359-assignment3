@@ -74,16 +74,13 @@ func _ready():
 
 
 func _process(delta):
-	# ---------------------------------------------------------
 	# QUERIED NEIGHBORS (Broad phase)
-	# ---------------------------------------------------------
 	var neighbors = spatial_hash.query(global_position, neighbor_radius)
 	var good_neighbors = neighbors.filter(func(ball): return ball.fish_size == fish_size)
 	var bad_neighbors = neighbors.filter(func(ball): return ball.fish_size != fish_size)
 
-	# ---------------------------------------------------------
+
 	# FLOCKING FORCES
-	# ---------------------------------------------------------
 	var sep = Vector3.ZERO
 	var ali = Vector3.ZERO
 	var coh = Vector3.ZERO
@@ -130,9 +127,8 @@ func _process(delta):
 	acceleration += sep * weight_separation
 	acceleration += ali * weight_alignment
 	acceleration += coh * weight_cohesion
-	# ---------------------------------------------------------
+
 	# BOUNDARY STEERING
-	# ---------------------------------------------------------
 	var boundary_force := Vector3.ZERO
 	if global_position.x < bounds_min.x + boundary_distance:
 		boundary_force.x += boundary_push_strength
@@ -150,9 +146,6 @@ func _process(delta):
 	# Add this to total acceleration
 	acceleration += boundary_force
 
-	# ---------------------------------------------------------
-	# MOVE THE BOID
-	# ---------------------------------------------------------
 	velocity += acceleration * delta
 	velocity = velocity.limit_length(max_speed)
 
@@ -164,28 +157,13 @@ func _process(delta):
 		spatial_hash.update(self, last_pos)
 		last_pos = global_position
 
-	# ---------------------------------------------------------
-	# COLOR DEBUGGING (your existing logic)
-	# ---------------------------------------------------------
-	#for ball in near_balls:
-		#ball.set_close_ball(false)
-#
-	#for ball in neighbors:
-		#if ball.global_position.distance_to(global_position) < separation_radius:
-			#ball.set_close_ball(true)
-#
 	near_balls = neighbors
 
-
-
-# ---------------------------------------------------------
-# Utility color functions
-# ---------------------------------------------------------
 
 func flee_from(predator_pos: Vector3):
 	var desired = (global_position - predator_pos).normalized() * (max_speed * 1.1)
 	var flee_force = (desired - velocity).limit_length(max_force)
-	# LIMIT the force so they don’t blast away too fas
+	# Limit the force so they don’t blast away too fast
 	flee_force = flee_force.limit_length(max_flee_force)
 	velocity += flee_force
 
@@ -213,10 +191,8 @@ func remove():
 	# Store position before any changes
 	var pos = global_position
 	
-	# Optional: scale boid for visual effect
-	scale *= 2
 	
-	# Spawn bubbles if the bubble scene exists
+	# Spawn bubbles 
 	if bubble_scene:
 		var bubbles = bubble_scene.instantiate()
 		bubbles.position = pos
@@ -226,6 +202,5 @@ func remove():
 	spatial_hash.remove(self)
 	
 	# Finally free this node safely
-	#queue_free()
 	call_deferred("queue_free")
 	
