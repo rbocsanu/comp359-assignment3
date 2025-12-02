@@ -30,6 +30,12 @@ var fish_size = 1
 @export var bubble_scene: PackedScene = preload("res://Bubble.tscn")
 
 @onready var glow = $glow
+@onready var shark_animation_player: AnimationPlayer = $shark/AnimationPlayer
+@onready var sardine_animation_player: AnimationPlayer = $sardine/AnimationPlayer
+@onready var flat_animation_player: AnimationPlayer = $flat/AnimationPlayer
+
+
+
 
 func set_hash(_spatial_hash: SpatialHash) -> void:
 	spatial_hash = _spatial_hash
@@ -48,7 +54,9 @@ func set_fish_size(_size: int) -> void:
 			$shark.visible = !$shark.visible
 
 func _ready():
-	
+	shark_animation_player.play("SharkArmature|SharkArmature|SharkArmature|Swim|SharkArmature|Swim")
+	sardine_animation_player.play("Armature|Swim")
+	flat_animation_player.play("Armature|Swim_001")
 	last_pos = global_position
 	
 	# Add ball to the SpatialHash table

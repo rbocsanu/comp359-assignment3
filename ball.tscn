@@ -29,3 +29,5 @@ visible = false
 light_color = Color(1, 0, 0, 1)
 light_energy = 0.25
 light_size = 3.0
+
+[editable path="shark"]

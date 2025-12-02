@@ -219,7 +219,7 @@ func _eat_fish(ball: Ball) -> void:
 	if ball.fish_size <= current_size:
 		ball.set_close(true)
 		scale += one * growth_rate
-		distance += growth_rate * 1.001
+		distance += growth_rate 
 		environment.environment.volumetric_fog_density *= 0.99
 		shield += (max_shield * 0.05) # * delta
 		current_exp += ball.fish_size
