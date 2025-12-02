@@ -22,7 +22,7 @@ var camera_direction = Vector3.ZERO
 var spatial_hash: SpatialHash
 var near_balls: Array = []
 var distance = 1.0
-var scared_distance = 4.5
+var scared_distance = 3.0
 var wire := ImmediateMesh.new()
 var wire_instance: MeshInstance3D
 var key: Vector3i
@@ -141,7 +141,7 @@ func _physics_process(delta: float) -> void:
 	key = spatial_hash.getKey(global_position) * size
 	#_debug_cells()
 	# Checks neighboring cells for balls in radius
-	var balls = spatial_hash.query(global_position).filter(func(b): return is_instance_valid(b))
+	var balls = spatial_hash.query(global_position, scared_distance).filter(func(b): return is_instance_valid(b))
 	near_balls = near_balls.filter(func(b): return is_instance_valid(b))
 	for ball in near_balls:
 		ball.set_close(false)

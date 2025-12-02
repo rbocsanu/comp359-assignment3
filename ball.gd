@@ -3,7 +3,7 @@ extends Node3D
 class_name Ball
 
 # Flocking parameters
-@export var neighbor_radius: float = 4.0
+@export var neighbor_radius: float = 3.0
 @export var separation_radius: float = 2.0
 @export var max_speed: float = 3.0
 @export var max_force: float = 4.0
@@ -69,7 +69,7 @@ func _process(delta):
 	# ---------------------------------------------------------
 	# QUERIED NEIGHBORS (Broad phase)
 	# ---------------------------------------------------------
-	var neighbors = spatial_hash.query(global_position)
+	var neighbors = spatial_hash.query(global_position, neighbor_radius)
 	var good_neighbors = neighbors.filter(func(ball): return ball.fish_size == fish_size)
 	var bad_neighbors = neighbors.filter(func(ball): return ball.fish_size != fish_size)
 

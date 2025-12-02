@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ckwuk8nnieq3m"]
+[gd_scene load_steps=13 format=3 uid="uid://ckwuk8nnieq3m"]
 
 [ext_resource type="Script" uid="uid://cr6v38cx37swp" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://bv0476nxycl37" path="res://UI.gd" id="2_1bvp3"]
@@ -26,6 +26,9 @@ fog_depth_curve = 0.044194233
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.3
 volumetric_fog_albedo = Color(0, 0, 1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_5vw27"]
+font_size = 28
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_0xm2m")
@@ -77,6 +80,11 @@ stretch_margin_right = 10
 stretch_margin_bottom = 10
 texture_under = ExtResource("2_h2yge")
 texture_progress = ExtResource("5_lquwl")
+
+[node name="Label" type="Label" parent="UI/Container"]
+layout_mode = 2
+text = "SHIFT to Sprint"
+label_settings = SubResource("LabelSettings_5vw27")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_272bh")

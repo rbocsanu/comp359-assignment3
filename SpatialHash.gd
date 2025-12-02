@@ -55,15 +55,19 @@ func update(obj: Node3D, old_pos: Vector3) -> void:
 
 # Returns an array
 # of all of the objects
-# in the 3x3x3 grid of pos
-func query(pos: Vector3) -> Array:
+# in the ixixi grid of pos
+# where i = ceil((distance_to_check - size * 0.5) / size) * 2 + 1
+func query(pos: Vector3, distance_to_check: float = 0.0) -> Array:
+	var boxes_to_checked_in_direction = ceil((distance_to_check - size * 0.5) / size)
+	
 	var key = getKey(pos)
 	var result: Array = []
-	for x in range(-1,2):
-		for y in range(-1,2):
-			for z in range(-1,2):
+	for x in range(-boxes_to_checked_in_direction, 1 + boxes_to_checked_in_direction):
+		for y in range(-boxes_to_checked_in_direction, 1 + boxes_to_checked_in_direction):
+			for z in range(-boxes_to_checked_in_direction, 1 + boxes_to_checked_in_direction):
 				var neighbor = key + Vector3i(x,y,z)
 				
 				if cells.has(neighbor):
 					result.append_array(cells[neighbor])
 	return result
+	

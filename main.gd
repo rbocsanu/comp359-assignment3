@@ -8,13 +8,14 @@ var eaten_screen_scene = load("res://EatenScreen.tscn")
 var balls: Array[Ball] = []
 var player: Player
 var eaten_screen: EatenScreen
+var spatial_hash: SpatialHash
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	handle_spawn()
 
 func handle_spawn():
-	var spatial_hash = SpatialHash.new()
+	spatial_hash = SpatialHash.new()
 	add_child(spatial_hash)
 	
 	# Create instance of player
@@ -33,13 +34,12 @@ func handle_spawn():
 		randf_range(-25,25),
 		randf_range(-25,25),
 		randf_range(-25,25)),
-		spatial_hash,
-		6)
+		)
 	
 	_on_player_size_changed(player.current_size)
 
 # Function for creating an instance of ball
-func spawn_ball(pos: Vector3, spatial_hash: SpatialHash, exp: int) -> void:
+func spawn_ball(pos: Vector3) -> void:
 	var ball = ball_scene.instantiate()
 	ball.spatial_hash = spatial_hash
 	ball.position = pos
@@ -52,6 +52,9 @@ func spawn_ball(pos: Vector3, spatial_hash: SpatialHash, exp: int) -> void:
 func handle_game_over():
 	player.queue_free()
 	player = null
+	
+	spatial_hash.queue_free()
+	spatial_hash = null
 	
 	eaten_screen = eaten_screen_scene.instantiate()
 	add_child(eaten_screen)
@@ -71,7 +74,6 @@ func _respawn():
 	handle_spawn()
 
 func _on_player_size_changed(new_size):
-	print("IM WORKING")
 	for ball in balls:
 		if is_instance_valid(ball):
 			if ball.fish_size <= new_size:
