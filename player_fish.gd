@@ -49,8 +49,7 @@ func set_shield(value):
 	shield_changed.emit(max_shield, shield)
 	if shield <= 0:
 		print("low shield")
-		#hide()
-		#died.emit()
+
 
 var current_size: int = 1
 var current_exp: float = 0.0:
