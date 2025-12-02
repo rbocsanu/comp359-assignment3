@@ -157,7 +157,7 @@ func _physics_process(delta: float) -> void:
 			_eat_fish(ball)
 			
 		if ball.global_position.distance_to(global_position) < scared_distance:
-			if ball.fish_size <= scale.x:
+			if ball.fish_size <= current_size:
 				ball.set_close_scared(true, global_position)
 			else: 
 				ball.set_close_hungry(true, global_position)
@@ -220,7 +220,7 @@ func _eat_fish(ball: Ball) -> void:
 	if ball.fish_size <= current_size:
 		ball.set_close(true)
 		scale += one * growth_rate
-		distance += growth_rate * 1.1
+		distance += growth_rate * 1.001
 		environment.environment.volumetric_fog_density *= 0.99
 		shield += (max_shield * 0.05) # * delta
 		current_exp += ball.fish_size
