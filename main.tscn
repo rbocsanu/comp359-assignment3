@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ckwuk8nnieq3m"]
+[gd_scene load_steps=12 format=3 uid="uid://ckwuk8nnieq3m"]
 
 [ext_resource type="Script" uid="uid://cr6v38cx37swp" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://bv0476nxycl37" path="res://UI.gd" id="2_1bvp3"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://bopvvw0pqxm4v" path="res://bar_background.png" id="2_h2yge"]
 [ext_resource type="Texture2D" uid="uid://cadyqafe438xl" path="res://bar_foreground.png" id="3_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://4krp1h4sojos" path="res://energy_bar.png" id="5_lquwl"]
+[ext_resource type="AudioStream" uid="uid://ddqriwoy2sqm3" path="res://ES_Snowball Festival - Trevor Kowalski.mp3" id="7_272bh"]
+[ext_resource type="AudioStream" uid="uid://ueto0qkepcl2" path="res://ES_Wave, Large, Sand 02 - Epidemic Sound.mp3" id="8_5vw27"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ig7tw"]
 ground_bottom_color = Color(0.25337827, 0.35154185, 0.4985448, 1)
@@ -53,6 +55,7 @@ script = ExtResource("2_1bvp3")
 layout_mode = 2
 
 [node name="ScoreBar" type="TextureProgressBar" parent="UI/Container"]
+visible = false
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 max_value = 0.0
@@ -74,3 +77,15 @@ stretch_margin_right = 10
 stretch_margin_bottom = 10
 texture_under = ExtResource("2_h2yge")
 texture_progress = ExtResource("5_lquwl")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_272bh")
+volume_db = -12.516
+autoplay = true
+parameters/looping = true
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_5vw27")
+volume_db = -13.316
+autoplay = true
+parameters/looping = true

@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://blro6i50c74b6"]
+[gd_scene load_steps=6 format=3 uid="uid://blro6i50c74b6"]
 
+[ext_resource type="AudioStream" uid="uid://pl8gu2x8wrj4" path="res://ES_Bubble, Single Pop 02 - Epidemic Sound.mp3" id="2_1mgrk"]
 [ext_resource type="Script" uid="uid://3d3pc6x53agu" path="res://bubbles.gd" id="2_to824"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bhuxa"]
@@ -21,3 +22,8 @@ amount = 14
 process_material = SubResource("ParticleProcessMaterial_bhuxa")
 draw_pass_1 = SubResource("SphereMesh_to824")
 script = ExtResource("2_to824")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_1mgrk")
+volume_db = 4.439
+autoplay = true

@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://c5qfyvlk8v81b"]
+[gd_scene load_steps=4 format=3 uid="uid://c5qfyvlk8v81b"]
 
 [ext_resource type="Script" uid="uid://dnl48lb7fr0x3" path="res://eaten_screen.gd" id="1_tsdse"]
+[ext_resource type="AudioStream" uid="uid://cnhdh27uavfvl" path="res://ES_Impact, Bass, Spawn, Start Game - Epidemic Sound.mp3" id="2_u3ayl"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_l35xn"]
 font_size = 70
@@ -53,3 +54,8 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 50
 text = "RESPAWN"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_u3ayl")
+volume_db = 1.268
+autoplay = true
