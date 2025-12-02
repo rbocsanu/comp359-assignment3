@@ -12,7 +12,7 @@ class_name Ball
 
 @export var weight_separation: float = 1.8
 @export var weight_alignment: float = 1.0
-@export var weight_cohesion: float = 0.8
+@export var weight_cohesion: float = 0.2
 
 # Declare some variables
 var spatial_hash = SpatialHash
@@ -22,10 +22,10 @@ var velocity: Vector3 = Vector3.ZERO
 var direction: Vector3 = Vector3.ZERO
 var fish_size = 1
 
-@export var bounds_min: Vector3 = Vector3(-30, -30, -30)
-@export var bounds_max: Vector3 = Vector3( 30,  30,  30)
+@export var bounds_min: Vector3 = Vector3(-50, -50, -50)
+@export var bounds_max: Vector3 = Vector3(50,  50,  50)
 @export var boundary_push_strength: float = 8.0
-@export var boundary_distance: float = 10.0   # start steering before reaching wall
+@export var boundary_distance: float = 6.0   # start steering before reaching wall
 
 @export var bubble_scene: PackedScene = preload("res://Bubble.tscn")
 

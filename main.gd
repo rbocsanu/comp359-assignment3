@@ -33,16 +33,19 @@ func handle_spawn():
 		randf_range(-25,25),
 		randf_range(-25,25),
 		randf_range(-25,25)),
-		spatial_hash)
+		spatial_hash,
+		6)
 	
 	_on_player_size_changed(player.current_size)
 
 # Function for creating an instance of ball
-func spawn_ball(pos: Vector3, spatial_hash: SpatialHash) -> void:
+func spawn_ball(pos: Vector3, spatial_hash: SpatialHash, exp: int) -> void:
 	var ball = ball_scene.instantiate()
 	ball.spatial_hash = spatial_hash
 	ball.position = pos
-	ball.set_fish_size(int(pow(randf(), 4) * 4) + 1)
+
+	#ball.set_fish_size(size)
+	ball.set_fish_size(int(pow(randf(), 16) * 4) + 1)
 	add_child(ball)
 	balls.append(ball)
 	
