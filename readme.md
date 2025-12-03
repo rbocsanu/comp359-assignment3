@@ -1,19 +1,21 @@
 # Spatial Sea --- Assignment 3
 
-**Markus Webster (300200398)**\
-**Loreena Alfonso (300206896)**\
+**Markus Webster (300200398)**
+**Loreena Alfonso (300206896)**
 **Robert Bocsanu (300198372)**
+
+This project requires the Godot 4 Game engine in order to run. You can find the download link here: [Godot](https://godotengine.org) 
 
 ## 📘 Table of Contents
 
-1.  [Problem Statement](#problem-statement)\
-2.  [Plan of Work](#plan-of-work)\
-3.  [Analysis Framework](#analysis-framework)\
+1.  [Problem Statement](#problem-statement)
+2.  [Plan of Work](#plan-of-work)
+3.  [Analysis Framework](#analysis-framework)
 4.  [Debugging and Testing](#debugging-and-testing)
-    -   [Markus](#markus)\
-    -   [Loreena](#loreena)\
+    -   [Markus](#markus)
+    -   [Loreena](#loreena)
 5.  [Log of Work](#media)
-6.  [Licences](#licences)\
+6.  [Licences](#licences)
 
 ## Problem Statement 🐠🐠🐠
 
