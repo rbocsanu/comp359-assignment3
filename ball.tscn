@@ -17,6 +17,36 @@ visible = false
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
 visible = false
 
+[node name="Skeleton3D" parent="shark/RootNode/SharkArmature" index="0"]
+bones/2/rotation = Quaternion(-0.03821586, 0.0019150424, -0.05001171, 0.9980154)
+bones/3/rotation = Quaternion(0.028238185, 0.0023149287, -0.047918864, 0.9984493)
+bones/4/rotation = Quaternion(-0.012815303, -0.00038320493, 0.011673945, 0.9998497)
+bones/5/rotation = Quaternion(0.006512828, -0.0013290973, 0.033962984, 0.999401)
+bones/6/rotation = Quaternion(0.007893401, -0.0019949302, 0.08081832, 0.99669564)
+bones/8/rotation = Quaternion(0.0044577084, 0.059732262, 0.99542165, 0.07448433)
+bones/9/rotation = Quaternion(0.027223593, -0.0014654271, -0.009889496, 0.99957937)
+bones/10/rotation = Quaternion(-0.04350838, -0.00481321, -0.036591604, 0.9983711)
+bones/12/rotation = Quaternion(-0.19459629, 0.0007829226, -0.036182325, 0.98021555)
+bones/14/rotation = Quaternion(-0.13264495, -0.13635954, 0.80759096, 0.55821884)
+bones/15/rotation = Quaternion(-0.011908506, -0.090142965, 0.24984485, 0.96400726)
+bones/17/rotation = Quaternion(-0.13264316, 0.13635808, -0.80759126, 0.5582192)
+bones/18/rotation = Quaternion(-0.011908986, 0.09014322, -0.24984458, 0.9640074)
+
+[node name="Tail4_end" parent="shark/RootNode/SharkArmature/Skeleton3D" index="1"]
+transform = Transform3D(0.9983707, -0.05705073, -0.00095639215, 0.057058517, 0.99823004, 0.016730167, 2.3137565e-07, -0.016757492, 0.9998589, 0.002935455, 0.022557782, -0.0006713126)
+
+[node name="Head_end" parent="shark/RootNode/SharkArmature/Skeleton3D" index="2"]
+transform = Transform3D(-0.9705722, -0.2398957, 0.020955045, 0.24080934, -0.96688175, 0.08455011, -2.2261756e-05, 0.087108895, 0.9961935, -0.00439635, -0.025931396, 0.0029069732)
+
+[node name="LowerJaw_end" parent="shark/RootNode/SharkArmature/Skeleton3D" index="3"]
+transform = Transform3D(-0.9709163, -0.23376626, -0.051715054, 0.23941828, -0.9480153, -0.2096307, -2.2182172e-05, -0.21591333, 0.9764073, -0.003500198, -0.022487234, -0.0016408076)
+
+[node name="Fin2_L_end" parent="shark/RootNode/SharkArmature/Skeleton3D" index="4"]
+transform = Transform3D(0.6707505, 0.6653941, 0.32763323, -0.7416825, 0.6017557, 0.29630378, 4.3681225e-06, -0.44174466, 0.8971349, 0.01121656, -0.0069748056, -0.006977831)
+
+[node name="Fin2_R_end" parent="shark/RootNode/SharkArmature/Skeleton3D" index="5"]
+transform = Transform3D(0.8593354, -0.45879084, -0.22594933, 0.5114118, 0.77094054, 0.37961516, 2.8813176e-05, -0.44176877, 0.8971229, -0.011493651, -0.0035570262, -0.0069783228)
+
 [node name="sword" parent="." instance=ExtResource("4_gchj4")]
 transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, 0, 0, 0)
 visible = false

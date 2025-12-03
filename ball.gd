@@ -35,8 +35,6 @@ var fish_size = 1
 @onready var flat_animation_player: AnimationPlayer = $flat/AnimationPlayer
 
 
-
-
 func set_hash(_spatial_hash: SpatialHash) -> void:
 	spatial_hash = _spatial_hash
 
@@ -54,9 +52,13 @@ func set_fish_size(_size: int) -> void:
 			$shark.visible = !$shark.visible
 
 func _ready():
-	shark_animation_player.play("SharkArmature|SharkArmature|SharkArmature|Swim|SharkArmature|Swim")
-	sardine_animation_player.play("Armature|Swim")
-	flat_animation_player.play("Armature|Swim_001")
+	
+	if $shark.visible:
+		shark_animation_player.play("SharkArmature|SharkArmature|SharkArmature|Swim|SharkArmature|Swim")
+	if $sardine.visible:
+		sardine_animation_player.play("Armature|Swim")
+	if $flat.visible:
+		flat_animation_player.play("Armature|Swim_001")
 	last_pos = global_position
 	
 	# Add ball to the SpatialHash table
@@ -71,15 +73,13 @@ func _ready():
 
 	velocity = direction * max_speed * 0.5
 
-
-
 func _process(delta):
 	# QUERIED NEIGHBORS (Broad phase)
 	var neighbors = spatial_hash.query(global_position, neighbor_radius)
 	var good_neighbors = neighbors.filter(func(ball): return ball.fish_size == fish_size)
 	var bad_neighbors = neighbors.filter(func(ball): return ball.fish_size != fish_size)
 
-
+	
 	# FLOCKING FORCES
 	var sep = Vector3.ZERO
 	var ali = Vector3.ZERO
@@ -94,7 +94,7 @@ func _process(delta):
 			continue
 
 		var d = global_position.distance_to(other.global_position)
-		if d < neighbor_radius:
+		if d < neighbor_radius and !$shark.visible:
 			count += 1
 
 			# --- SEPARATION --------------------
@@ -106,6 +106,8 @@ func _process(delta):
 
 			# --- COHESION ----------------------
 			coh += other.global_position
+			
+				
 
 	if count > 0:
 		# --- Alignment ---
@@ -168,6 +170,8 @@ func flee_from(predator_pos: Vector3):
 	velocity += flee_force
 
 func head_towards(prey_position: Vector3):
+	if $shark.visible:
+		shark_animation_player.play("SharkArmature|SharkArmature|SharkArmature|Swim_Bite|SharkArmature|Swim_Bite")
 	var desired = (prey_position - global_position).normalized()
 	var hunger_force = (desired - velocity).limit_length(max_force)
 	
