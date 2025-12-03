@@ -51,7 +51,7 @@ The spatial hash algorithm is implemented as a class and uses a Dictionary as a 
 
 #### `query()`
 
--  This function checks c cells, with mc objects in cell c. The time complexity is then O(c*mc) with a worst case of O(n) if all of the objects are in c cells.
+-  This function checks c cells, with $m_c$ objects in cell c. The time complexity is then O($c*m_c$) with a worst case of O(n) if all of the objects are in c cells.
 
 
 
