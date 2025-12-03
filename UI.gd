@@ -9,7 +9,7 @@ func _ready():
 
 	var players = get_tree().get_nodes_in_group("player")
 	if players.is_empty():
-		push_error("UI.gd: Could not find any node in group 'player'!")
+		#push_error("UI.gd: Could not find any node in group 'player'!")
 		return
 
 	player = players[0]
