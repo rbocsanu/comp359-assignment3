@@ -69,7 +69,7 @@ It was similar to the video suggested for this topic, where in this case when th
 
 This strategy worked great for making sure the spatial hash works as intended.
 
-![debugging screenshot 1](Picture2.png)
+![debugging screenshot 2](Picture2.png)
 A debug feature was added to attempt to visualize the cells \
 around the player that were being used for detection.
 While faint, you can see the cells around the player fish. Only these cells are searched for nearby fish.
@@ -78,11 +78,17 @@ While faint, you can see the cells around the player fish. Only these cells are 
 
 Most of the debugging involved changes in conventions from Godot 3 to 4. In addition to that, when working on the flocking algorithm, smoothing function was added but the fish started spinning like crazy in place. When that was fixed, that the fleeing action was so stunted, they were removed from the whole thing. The coloured balls  remained in place for a long time, turning different colours to see when the neighbours found their close fish. Then during some play testing of the game, we realized that it was very hard to detect by eye which fish were bigger than you and would eat you vs you could eat. Markus added the red and green glow to help make it visually obvious.
 
+### **Robert**
 
+The fish movement was straightforward to implement and used multiple techniques from GDQuest (2024). The forward and left/right movement was implemented using the fish’s current look vector and right vector respectively. The camera is attached to a pivot node in the center of the fish which can be rotated in the same direction as the fish to move the camera accordingly — so that separate logic isn’t required for the camera.
 
+![debugging screenshot 3](Picture3.png)
 
+Sprinting uses the Input is_action_pressed() method to see when the shift button is being pressed. It then increases the camera’s FOV and the player’s speed and emits a signal that the player is sprinting for the GUI to listen to and update accordingly.
 
+For adding the game over screen, the most significant problem was properly removing and resetting all of the objects in the scene. This involved calling free() on all fish, the player, and the spatial hash and reinstating them when the “respawn” button was pressed.
 
+Lastly, in order to accurately search a specific distance from the player, the query() method was modified to take an optional distance_to_check parameter. The function then performs calculations to see how many boxes around the player need to be checked to ensure all fish at that distance are found. While with a small hash size, like the one we used, this was fairly accurate, fish not in the radius of distance_to_check may be included depending on where the character is in their box. Additionally, the distance_to_check describes the radius of a cube to be checked — not a sphere — meaning we had to include extra checks after the query() to ensure the neighbors were not too far away.
 
 
 ## Log of Work
@@ -191,15 +197,21 @@ Date:   Fri Nov 7 19:20:16 2025 -0800
 ## References
 Godot Engine contributors. (2025). Godot Engine (Version 4.5) [software]. https://godotengine.org/
 
-Generative AI was used to help navigate and understand the Godot documentation.
-
-Thank you to Quaternius for the use of the fish models. https://poly.pizza/u/Quaternius
-
 Boids. (n.d.). Cs.stanford.edu. https://cs.stanford.edu/people/eroberts/courses/soco/projects/2008-09/modeling-natural-systems/boids.html
 
-‌sergioabreu-g. (2025). GitHub - sergioabreu-g/boids: The Boids Algorithm implemented in Godot. GitHub. https://github.com/sergioabreu-g/boids
-‌
+Godot Community. (n.d.). Godot Docs – 4.5 branch. https://docs.godotengine.org/en/stable/ 
 
+Poly by Google. (2017). Fish. poly.pizza. https://poly.pizza/m/aEyLrUMMoUK
+
+Quaternius. (2021). Fish. poly.pizza. https://poly.pizza/m/XWl86YFtpF
+
+Quaternius. (2022). Swordfish. poly.pizza. https://poly.pizza/m/7hMOlBjln0
+
+Quaternius. (2023). Shark. poly.pizza. https://poly.pizza/m/YYsK3gRCBZ
+
+‌sergioabreu-g. (2025). GitHub - sergioabreu-g/boids: The Boids Algorithm implemented in Godot. GitHub. https://github.com/sergioabreu-g/boids
+
+‌Generative AI was used to help navigate and understand the Godot documentation.
 
 
 ## Licences
