@@ -1,66 +1,91 @@
-Assignment 3
-Markus Webster 300200398
-Loreena Alfonso 300206896
-Robert Bocsanu 300198372
+# Spatial Sea --- Assignment 3
 
+**Markus Webster (300200398)**\
+**Loreena Alfonso (300206896)**\
+**Robert Bocsanu (300198372)**
 
-Problem Statement
+## 📘 Table of Contents
+
+1.  [Problem Statement](#problem-statement)\
+2.  [Plan of Work](#plan-of-work)\
+3.  [Analysis Framework](#analysis-framework)\
+4.  [Debugging and Testing](#debugging-and-testing)
+    -   [Markus](#markus)\
+    -   [Loreena](#loreena)\
+5.  [Log of Work](#media)
+6.  [Licences](#licences)\
+
+## Problem Statement 🐠🐠🐠
+
 Hash tables implemented for 3D spatial management of moving items. To achieve this we have built a playable game in Godot: Spatial Sea. We leveraged the spatial hashmap to detect fish the you (the player) can eat, enable the schooling behaviour of the fish and the hunting action of the predators trying to eat you! 
 
-Plan of Work
+![gif of play](giphy.gif)
+
+## Plan of Work
+
 We planned this work to be a collaborative effort between the three of us. In our first meeting we agreed that we would create this game, expanding the work so that each person had substantial contributions towards a portfolio project. We agreed to meet weekly and provide updates in our group channel on Discord. Robert and Markus had experience with Godot so we had a mini tutorial about the development environment to all get on the same page with the features.
 
 In terms of the division of tasks, Markus would implement the spatial hash base class while Robert initialized the game, creating a player and the ocean environment. Loreena worked on adapting the boids flocking algorithm to the godot language and making the fish flee from the player. Robert finalized the sprinting action and the leveling-up logic. Once the basics were done, we all worked together to bring the polish. 
 
-![gif of play](giphy.gif)
+## Analysis Framework
 
 
- 
-
-
-
-Analysis Framework
+### **Function Time Complexities**
 The spatial hash algorithm is implemented as a class and uses a Dictionary as a hashtable called cells, and has functions:
-getKey()
-add()
-remove()
-update()
-query()
-getKey()
-This function has time complexity O(1) since it only consists of constant time operations.
-add()
-This function should have average time complexity O(1) since the dictionary lookup is O(1), unless a significant number of objects belong to the same key, then worst case the lookup can degrade to O(n).
-remove()
-On average this function will be O(m) where m is the number of objects in the cell since removing an object from the dictionary requires linearly searching the array of objects. Worst case, if every object is in the same cell, then we get O(n).
-update()
-This function uses constant time operations, as well as add() and remove(). Combining these time complexities gives average case O(m) and worst case of O(n) from remove.
-query()
-This function checks c cells, with mc objects in cell c. The time complexity is then O(c*mc) with a worst case of O(n) if all of the objects are in c cells.
+
+#### `getKey()`
+
+-   This function has time complexity O(1) since it only consists of constant time operations.
+
+#### `add()`
+
+- This function should have average time complexity O(1) since the dictionary lookup is O(1), unless a significant number of objects belong to the same key, then worst case the lookup can degrade to O(n).
+
+#### `remove()`
+
+-  On average this function will be O(m) where m is the number of objects in the cell since removing an object from the dictionary requires linearly searching the array of objects. Worst case, if every object is in the same cell, then we get O(n).
+
+#### `update()`
+
+-   This function uses constant time operations, as well as add() and remove(). Combining these time complexities gives average case O(m) and worst case of O(n) from remove.
+
+#### `query()`
+
+-  This function checks c cells, with mc objects in cell c. The time complexity is then O(c*mc) with a worst case of O(n) if all of the objects are in c cells.
+
+
+
+### **Overall Complexity**
 
 Overall, the spatial hash algorithm runs between O(1) and O(n). And given the way it was used in this project, it should always run closer to constant time, since the objects are spread out.
-Debugging and Testing
-Markus
-Initially, in order to test the spatial hash algorithm before adding the game elements, colored spheres were used to test. It was similar to the video suggested for this topic, where in this case when the player gets within a close enough distance to the other spheres, they turn from red to green.
 
+## 🧪 Debugging and Testing
+
+### **Markus**
+
+Initially, in order to test the spatial hash algorithm before adding the game elements, colored spheres were used to test.\
+It was similar to the video suggested for this topic, where in this case when the player gets within a close enough distance to the other spheres, they turn from red to green.
+![debugging screenshot 1](Picture1.png)
 
 This strategy worked great for making sure the spatial hash works as intended.
 
-A debug feature was added to attempt to visualize the cells around the player that were being used for detection.
+![debugging screenshot 1](Picture2.png)
+A debug feature was added to attempt to visualize the cells \
+around the player that were being used for detection.
 While faint, you can see the cells around the player fish. Only these cells are searched for nearby fish.
 
+### **Loreena**
 
-
-Loreena
-
-Most of my debugging involved changes in conventions from Godot 3 to 4. In addition to that, when I was working on the flocking algorithm, I tried to add a smoothing function but the fish started spinning like crazy in place. When I fixed that the fleeing action was so stunted I decided to remove the whole thing. I kept the coloured balls in place for a long time, turning them different colours to see when the neighbours found their close fish. Then when I did some play testing of the game, we realized that it was very hard to detect by eye which fish were bigger than you and would eat you vs you could eat. Markus added the red and green glow to help make it visually obvious.
-
+Most of the debugging involved changes in conventions from Godot 3 to 4. In addition to that, when working on the flocking algorithm, smoothing function was added but the fish started spinning like crazy in place. When that was fixed, that the fleeing action was so stunted, they were removed from the whole thing. The coloured balls  remained in place for a long time, turning different colours to see when the neighbours found their close fish. Then during some play testing of the game, we realized that it was very hard to detect by eye which fish were bigger than you and would eat you vs you could eat. Markus added the red and green glow to help make it visually obvious.
 
 
 
 
 
 
-Log of Work
+
+
+## Log of Work
 
 commit cb1f6bd068bb8906258beb3f21eac77773b69ec7
 Author: lalfonso00 <loreenaalfonso@gmail.com>
@@ -163,16 +188,21 @@ Date:   Fri Nov 7 19:20:16 2025 -0800
 
 
 
-References
+## References
 Godot Engine contributors. (2025). Godot Engine (Version 4.5) [software]. https://godotengine.org/
 
 Generative AI was used to help navigate and understand the Godot documentation.
 
 Thank you to Quaternius for the use of the fish models. https://poly.pizza/u/Quaternius
 
+Boids. (n.d.). Cs.stanford.edu. https://cs.stanford.edu/people/eroberts/courses/soco/projects/2008-09/modeling-natural-systems/boids.html
+
+‌sergioabreu-g. (2025). GitHub - sergioabreu-g/boids: The Boids Algorithm implemented in Godot. GitHub. https://github.com/sergioabreu-g/boids
+‌
 
 
-Licences
+
+## Licences
 
 
 Creator Subscription Music License
